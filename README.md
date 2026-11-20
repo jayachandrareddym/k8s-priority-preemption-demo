@@ -12,7 +12,7 @@ The lab demonstrates scheduler preemption on a deliberately constrained single-n
 - `manifests/priority-classes.yaml` — demo PriorityClasses
 - `manifests/low-priority.yaml` — low-priority workloads that consume requested CPU
 - `manifests/high-priority.yaml` — critical workload used to trigger preemption
-- `manifests/pdb-example.yaml` — optional PDB scope
+- `manifests/pdb-example.yaml` — optional PDB example
 - `scripts/demo-commands.md` — exact command sequence
 - `docs/presenter-guide.md` — timing and speaking cues
 - `docs/troubleshooting.md` — failure diagnosis and recovery
@@ -45,7 +45,7 @@ Run the cleanup commands at the end of the runbook. The lab creates a dedicated 
 ## Further reading
 
 - [Pod Priority and Preemption — Kubernetes documentation](https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/)
-- [Pod Disruption Budgets — kubernetes documentation](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/)
+- [Pod Disruption Budgets — Kubernetes documentation](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/)
 - [Assigning Pods to Nodes / resource requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
 
 ## Demo status
