@@ -1,0 +1,16 @@
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: demo-low
+value: 100
+globalDefault: false
+description: "Low-priority workload used as a preemption victim in the demo."
+
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: demo-critical
+value: 1000000
+globalDefault: false
+description: "High-priority workload that triggers scheduler preemption in the demo."

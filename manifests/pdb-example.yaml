@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: low-priority-workers
+  namespace: preemption-demo
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: low-priority-workers

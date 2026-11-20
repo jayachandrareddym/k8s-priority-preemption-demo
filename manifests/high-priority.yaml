@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: critical-request
+  namespace: preemption-demo
+  labels:
+    app: critical-request
+spec:
+  priorityClassName: demo-critical
+  nodeSelector:
+    demo-preemption: "true"
+  terminationGracePeriodSeconds: 0
+  containers:
+    - name: pause
+      image: registry.k8s.io/pause:3.10
+      imagePullPolicy: IfNotPresent
+      resources:
+        requests:
+          cpu: 600m
+          memory: 128Mi

@@ -8,10 +8,11 @@ The lab demonstrates scheduler preemption on a deliberately constrained single-n
 
 ## Repository layout
 
+- `manifests/namespace.yaml` — dedicated namespace
 - `manifests/priority-classes.yaml` — demo PriorityClasses
 - `manifests/low-priority.yaml` — low-priority workloads that consume requested CPU
 - `manifests/high-priority.yaml` — critical workload used to trigger preemption
-- `manifests/pdb-example.yaml` — optional PDB discussion (not a shield against scheduler preemption)
+- `manifests/pdb-example.yaml` — optional PDB scope
 - `scripts/demo-commands.md` — exact command sequence
 - `docs/presenter-guide.md` — timing and speaking cues
 - `docs/troubleshooting.md` — failure diagnosis and recovery
@@ -20,9 +21,8 @@ The lab demonstrates scheduler preemption on a deliberately constrained single-n
 ## Prerequisites
 
 - A disposable Kubernetes playground with `kubectl` access
-- At least one schedulable worker node
 - Permission to create namespaces, PriorityClasses, Pods and PDBs
-- A cluster with enough allocatable CPU for the baseline Pods, but not enough for the critical Pod until one or more lower-priority Pods are preempted
+- A node that can fit the baseline Pods, but not all three demo Pods together; after one 700m victim is removed, the critical Pod's 600m request should fit
 
 ## Quick start
 
@@ -35,7 +35,7 @@ The manifests use explicit CPU requests because the scheduler uses resource requ
 1. Priority affects scheduling order and can enable preemption when a higher-priority Pod is unschedulable due to insufficient resources.
 2. Priority is not a reservation: a high-priority Pod still needs a feasible node.
 3. The scheduler may nominate a node and begin terminating selected victims; graceful termination can delay the new Pod becoming Running.
-4. A PodDisruptionBudget does **not** prevent scheduler preemption. PDBs constrain voluntary disruptions through the Eviction API; scheduler preemption is a separate mechanism.
+4. A PodDisruptionBudget is **not a hard shield** against scheduler preemption. The scheduler tries to avoid violating a PDB, but respecting it is best effort; if no alternative victims make the pending Pod schedulable, preemption can still violate the PDB.
 5. Priority is not QoS, and it does not protect a Pod from every form of node pressure or OOM termination.
 
 ## Cleanup
@@ -45,7 +45,7 @@ Run the cleanup commands at the end of the runbook. The lab creates a dedicated 
 ## Further reading
 
 - [Pod Priority and Preemption — Kubernetes documentation](https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/)
-- [Pod Disruption Budgets — Kubernetes documentation](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/)
+- [Pod Disruption Budgets — kubernetes documentation](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/)
 - [Assigning Pods to Nodes / resource requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
 
 ## Demo status
